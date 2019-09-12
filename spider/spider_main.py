@@ -20,7 +20,7 @@ def deal01():
                     description, content = dp.parseHtml01(htmlContent)
                     description = description or title
                     if content:
-                        dp.saveResult(url, title, description, content, '电梯企业新闻', conn)
+                        dp.saveResult(url, title, description, content, '电梯维权新闻', conn)
                     else:
                         fout.write(url+' >>> ' + title + '\n')
                 except HTTPError:

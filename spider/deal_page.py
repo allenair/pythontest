@@ -6,7 +6,7 @@ import spider.pg_tool as pg
 
 
 def getHtmlContent(url, encoding):
-    headers = {'User_Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/76.0.3809.100 Safari/537.36'}
+    headers = {'User_Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/75.0.3809.100 Safari/537.36'}
     response = urllib.request.Request(url, headers=headers)
     htmlObj = urllib.request.urlopen(response)
     htmlContent = htmlObj.read().decode(encoding, errors='ignore')
@@ -113,5 +113,5 @@ def findPage_goodlift(baseUrl, num):
 
 
 if __name__ == '__main__':
-    findPage_goodlift('http://www.goodlift.net/elevator_news/list-7.html', 13)
+    findPage_goodlift('http://www.goodlift.net/elevator_news/list-5006.html', 80)
     # pass
