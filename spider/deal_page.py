@@ -17,7 +17,7 @@ def parseHtml01(htmlContent):
     description, content = '', ''
     soup = BeautifulSoup(htmlContent, 'html.parser')
     for tag in soup.find_all('div'):
-        if tag.get("id")=='article': #tag.get('class') and 'content' in tag.get('class'):
+        if tag.get("id") == 'article':
             content = replaceSpace(tag.text)
             break
 
@@ -39,16 +39,17 @@ def saveResult(url, title, description, content, content_type, conn):
 def replaceSpace(content, pattern='\s+', replaceStr='  '):
     return re.sub(pattern, replaceStr, content)
 
+
 def findPage(baseUrl, num):
     urlList = []
-    for i in range(1, num+1):
-        if i==1:
+    for i in range(1, num + 1):
+        if i == 1:
             urlList.append(baseUrl)
         else:
             urlList.append(baseUrl[:-1] + '-page-' + str(i) + "/")
 
     pattern = re.compile('.*<a href="//www.zgelevator.com/news.*')
-    with open('d:/tmp.txt', 'w',encoding='utf-8') as fout:
+    with open('e:/tmp.txt', 'w', encoding='utf-8') as fout:
         for url in urlList:
             htmlContent = getHtmlContent(url, 'utf-8')
             soup = BeautifulSoup(htmlContent, 'html.parser')
@@ -60,7 +61,8 @@ def findPage(baseUrl, num):
                             line = str(htmlStr)
                         if pattern.match(line):
                             print(line)
-                            fout.write(line+'\n')
+                            fout.write(line + '\n')
+
 
 def findPage_worldelevator(baseUrl, num):
     urlList = []
@@ -71,7 +73,7 @@ def findPage_worldelevator(baseUrl, num):
             urlList.append(baseUrl + '&page=' + str(i))
 
     pattern = re.compile('.*<a href="\sdetail.php\?id=.*')
-    with open('d:/tmp.txt', 'w',encoding='utf-8') as fout:
+    with open('e:/tmp.txt', 'w', encoding='utf-8') as fout:
         for url in urlList:
             htmlContent = getHtmlContent(url, 'gbk')
             soup = BeautifulSoup(htmlContent, 'html.parser')
@@ -84,8 +86,32 @@ def findPage_worldelevator(baseUrl, num):
                         print(line)
                         fout.write(line + '\n')
 
+def findPage_goodlift(baseUrl, num):
+    urlList = []
+    for i in range(1, num + 1):
+        if i == 1:
+            urlList.append(baseUrl)
+        else:
+            urlList.append(baseUrl[:-5] + '-' + str(i) + '.html')
+
+    pattern = re.compile('.*<a href="http://www.goodlift.net/elevator_news/show-.*')
+    with open('e:/tmp.txt', 'w', encoding='utf-8') as fout:
+        index = 0
+        for url in urlList:
+            htmlContent = getHtmlContent(url, 'utf-8')
+            soup = BeautifulSoup(htmlContent, 'html.parser')
+            index +=1
+            for tag in soup.find_all('li'):
+                for htmlStr in tag.contents:
+                    line = ''
+                    if htmlStr:
+                        line = str(htmlStr)
+                    if pattern.match(line):
+                        print(str(index) + '>>>' + line)
+                        fout.write(line + '\n')
 
 
 
-if __name__=='__main__':
-    findPage_worldelevator('http://www.worldelevator.net/info/list.php?cid=48',1)
+if __name__ == '__main__':
+    findPage_goodlift('http://www.goodlift.net/elevator_news/list-7.html', 13)
+    # pass

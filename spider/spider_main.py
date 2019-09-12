@@ -7,8 +7,8 @@ from urllib.error import HTTPError
 def deal01():
     conn = pg.getConnection()
     index = 0
-    with open('d:/spider.csv', 'r', encoding='utf-8') as fin:
-        with open('d:/wrong.txt', 'w', encoding='utf-8') as fout:
+    with open('e:/spider.csv', 'r', encoding='utf-8') as fin:
+        with open('e:/wrong.txt', 'w', encoding='utf-8') as fout:
             for ln in fin.readlines():
                 ln = ln.strip()
                 if len(ln) < 2:
@@ -20,7 +20,7 @@ def deal01():
                     description, content = dp.parseHtml01(htmlContent)
                     description = description or title
                     if content:
-                        dp.saveResult(url, title, description, content, '政策标准', conn)
+                        dp.saveResult(url, title, description, content, '电梯企业新闻', conn)
                     else:
                         fout.write(url+' >>> ' + title + '\n')
                 except HTTPError:
